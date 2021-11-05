@@ -28,9 +28,13 @@
     // 웹페이지
     var 직접비집행비율 = 0.056;
     // 문서상
-    var 연구수당지급액 = 10000000;
-    var 연구수당지급비율 = 0.2;
-    var 직접비사용비율 = 직접비집행비율;
+    var 연구수당_사용금액 = 10000000;
+    var 연구수당총액 = 10000000;
+    var 직접비사용금액 = 10000000;
+    var 직접비총액 = 10000000;
+    var 연구수당지급액 = 연구수당_사용금액;
+    var 연구수당지급비율 = 연구수당_사용금액 / 연구수당총액;
+    var 직접비사용비율 = 직접비사용금액 / 직접비총액;
     var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - 직접비사용비율 - 0.2);
     </script>
     <article class="row">
@@ -132,7 +136,12 @@
             참고항목
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">직접비 집행비율은 5.6%입니다.</li>
+            <li class="list-group-item">
+              직접비 집행비율은
+              <script type="text/javascript">
+              document.write((직접비집행비율 * 100).toFixed(1));
+              </script>%입니다.
+            </li>
             <li class="list-group-item"></li>
           </ul>
         </div>
