@@ -31,24 +31,29 @@
           <div class="card-header bg-success text-light">
             불인정금액 계산하기
           </div>
-          <div class="card-body alert-success">
-            <h5 class="alert-title">부가세</h5>
-            <div class="btn-group w-100">
-              <input class="btn-check" id="tax-1" type="radio" name="tax" value="1">
-              <label class="btn btn-outline-success" for="tax-1" onclick="alert('기능 준비중')">포함</label>
-              <input class="btn-check" id="tax-0" type="radio" name="tax" value="0">
-              <label class="btn btn-outline-success" for="tax-0">미포함</label>
-            </div>
-          </div>
-          <script type="text/javascript">
-          var tax = new URLSearchParams(parameter).get("tax");
-          if (tax == 1) {
-            document.getElementById('tax-1').checked = true;
-          } else {
-            document.getElementById('tax-0').checked = true;
-          }
-          </script>
           <table class="table table-striped align-middle text-center mb-0">
+            <thead>
+              <tr>
+                <th>부가세</th>
+                <td>
+                  <div class="btn-group w-100">
+                    <input class="btn-check" id="tax-1" type="radio" name="tax" value="1">
+                    <label class="btn btn-sm btn-outline-success" for="tax-1" onclick="alert('기능 준비중')">포함</label>
+                    <input class="btn-check" id="tax-0" type="radio" name="tax" value="0">
+                    <label class="btn btn-sm btn-outline-success" for="tax-0">미포함</label>
+                  </div>
+                </td>
+                <script type="text/javascript">
+                var tax = new URLSearchParams(parameter).get("tax");
+                if (tax == 1) {
+                  // document.getElementById('tax-1').checked = true;
+                  document.getElementById('tax-0').checked = true;
+                } else {
+                  document.getElementById('tax-0').checked = true;
+                }
+                </script>
+              </tr>
+            </thead>
             <tbody class="">
               <tr>
                 <th style="width: 10rem;">연구수당지급액</th>
@@ -209,7 +214,7 @@
                   </div>
                 </td>
               </tr>
-              <tr>
+              <tr class="table-warning">
                 <th>직접비사용비율(임시)</th>
                 <td>
                   <div class="input-group">
@@ -234,7 +239,7 @@
                 document.getElementById('불인정금액').innerText = Math.round(불인정금액).toLocaleString();
                 </script>
               </tr>
-              <tr>
+              <tr class="table-warning">
                 <th>불인정금액(임시)</th>
                 <td>
                   <span id="불인정금액_">(temp)</span>원
