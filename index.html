@@ -7,50 +7,51 @@
   <title>불인정금액 산출기 | 건국대학교 산학협력단</title>
 </head>
 <body>
-  <header class="navbar navbar-expand navbar-dark bg-dark mb-3">
+  <header class="navbar navbar-expand navbar-dark bg-success mb-3">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">불인정금액 산출기</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="?mode=0" class="nav-link">통합이지바로</a>
-          </li>
-          <li class="nav-item">
-            <a href="?mode=1" class="nav-link">통합RCMS</a>
+            <!-- <a href="./tax" class="nav-link">부가세 포함</a> -->
           </li>
         </ul>
       </div>
       <span class="navber-text"></span>
     </div>
   </header>
-  <main class="container" style="max-width: 30rem;">
+  <main class="container" style="max-width: 45rem;">
     <script type="text/javascript">
     var url = window.location.origin + window.location.pathname;
     var parameter = window.location.search;
-    var 연구수당지급비율 = 1; // 고정
-    var 직접비사용금액 = 20000000; // 가정
-    var 직접비사용비율 = 0.47; // 가정
-    var 직접비총액 = 20000000; // 가정
-    if (직접비총액) {
-      var 직접비사용비율 = 직접비사용금액 / 직접비총액;
-    }
     </script>
     <article class="row">
       <section class="col">
-        <form class="card mb-3 border-dark" method="get">
-          <div class="card-header bg-dark text-light">
+        <form class="card mb-3 border-success" method="get">
+          <div class="card-header bg-success text-light">
             불인정금액 계산하기
           </div>
+          <div class="card-body alert-success">
+            <h5 class="alert-title">부가세</h5>
+            <div class="btn-group w-100">
+              <input class="btn-check" id="tax-1" type="radio" name="tax" value="1">
+              <label class="btn btn-outline-success" for="tax-1" onclick="alert('기능 준비중')">포함</label>
+              <input class="btn-check" id="tax-0" type="radio" name="tax" value="0">
+              <label class="btn btn-outline-success" for="tax-0">미포함</label>
+            </div>
+          </div>
+          <script type="text/javascript">
+          var tax = new URLSearchParams(parameter).get("tax");
+          if (tax == 1) {
+            document.getElementById('tax-1').checked = true;
+          } else {
+            document.getElementById('tax-0').checked = true;
+          }
+          </script>
           <table class="table table-striped align-middle text-center mb-0">
-            <thead class="">
-              <tr>
-                <th style="width: 10rem;"></th>
-                <th>금액</th>
-              </tr>
-            </thead>
             <tbody class="">
               <tr>
-                <th>연구수당지급액</th>
+                <th style="width: 10rem;">연구수당지급액</th>
                 <td>
                   <div class="input-group">
                     <input class="form-control" id="연구수당지급액" type="number" name="연구수당지급액">
@@ -63,7 +64,137 @@
                 </td>
               </tr>
               <tr>
-                <th>직접비사용비율</th>
+                <th>소계</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="소계1" type="text" name="소계1" readonly>
+                    <script type="text/javascript">
+                    var 소계1 = Math.round(연구수당지급액)
+                    document.getElementById('소계1').value = 소계1.toLocaleString();
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th>전단계이월금</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="전단계이월금" type="number" name="전단계이월금">
+                    <script type="text/javascript">
+                    var 전단계이월금 = new URLSearchParams(parameter).get("전단계이월금");
+                    if (!전단계이월금) {
+                      전단계이월금 = 0;
+                    }
+                    document.getElementById('전단계이월금').value = 전단계이월금;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>해당단계협약금액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="해당단계협약금액" type="number" name="해당단계협약금액">
+                    <script type="text/javascript">
+                    var 해당단계협약금액 = new URLSearchParams(parameter).get("해당단계협약금액");
+                    document.getElementById('해당단계협약금액').value = 해당단계협약금액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>소계</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="소계2" type="text" name="소계2" readonly>
+                    <script type="text/javascript">
+                    var 소계2 = Math.round(전단계이월금) + Math.round(해당단계협약금액);
+                    document.getElementById('소계2').value = 소계2.toLocaleString();
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>연구수당 총액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="연구수당총액" type="number" name="연구수당총액">
+                    <script type="text/javascript">
+                    var 연구수당총액 = new URLSearchParams(parameter).get("연구수당총액");
+                    if (!연구수당총액) {
+                      연구수당총액 = 1;
+                    }
+                    document.getElementById('연구수당총액').value = 연구수당총액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>연구수당 사용금액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="연구수당사용금액" type="number" name="연구수당사용금액">
+                    <script type="text/javascript">
+                    var 연구수당사용금액 = new URLSearchParams(parameter).get("연구수당사용금액");
+                    if (!연구수당사용금액) {
+                      연구수당사용금액 = 1;
+                    }
+                    document.getElementById('연구수당사용금액').value = 연구수당사용금액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>연구수당 지급비율</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="연구수당지급비율" type="text" name="연구수당지급비율" readonly>
+                    <script type="text/javascript">
+                    var 연구수당지급비율 = 연구수당사용금액 / 연구수당총액;
+                    document.getElementById('연구수당지급비율').value = 연구수당지급비율 * 100;
+                    </script>
+                    <span class="input-group-text">%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th>직접비 총액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="직접비총액" type="number" name="직접비총액">
+                    <script type="text/javascript">
+                    var 직접비총액 = new URLSearchParams(parameter).get("직접비총액");
+                    document.getElementById('직접비총액').value = 직접비총액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>직접비 사용금액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="직접비사용금액" type="number" name="직접비사용금액">
+                    <script type="text/javascript">
+                    var 직접비사용금액 = new URLSearchParams(parameter).get("직접비사용금액");
+                    document.getElementById('직접비사용금액').value = 직접비사용금액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>직접비 사용비율</th>
                 <td>
                   <div class="input-group">
                     <input class="form-control" id="직접비사용비율" type="number" name="직접비사용비율">
@@ -75,18 +206,21 @@
                   </div>
                 </td>
               </tr>
+              <tr>
+                <th>직접비사용비율(임시)</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="직접비사용비율_" type="text" name="직접비사용비율"_ readonly>
+                    <script type="text/javascript">
+                    var 직접비사용비율_ = 직접비사용금액 / 직접비총액;
+                    document.getElementById('직접비사용비율_').value = 직접비사용비율_ * 100;
+                    </script>
+                    <span class="input-group-text">%</span>
+                  </div>
+                </td>
+              </tr>
             </tbody>
             <tfoot>
-              <tr>
-                <th>직접비사용비율</th>
-                <td>
-                  <span id="불인정d금액">(temp)</span>%
-                </td>
-                <script type="text/javascript">
-                var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - (직접비사용비율 * 0.01) - 0.2);
-                document.getElementById('불인정금액').innerText = Math.round(불인정금액).toLocaleString();
-                </script>
-              </tr>
               <tr>
                 <th>불인정금액</th>
                 <td>
@@ -97,10 +231,20 @@
                 document.getElementById('불인정금액').innerText = Math.round(불인정금액).toLocaleString();
                 </script>
               </tr>
+              <tr>
+                <th>불인정금액(임시)</th>
+                <td>
+                  <span id="불인정금액_">(temp)</span>원
+                </td>
+                <script type="text/javascript">
+                var 불인정금액_ = 연구수당지급액 * (연구수당지급비율 - 직접비사용비율_ - 0.2);
+                document.getElementById('불인정금액_').innerText = Math.round(불인정금액_).toLocaleString();
+                </script>
+              </tr>
             </tfoot>
           </table>
           <div class="card-footer d-grid">
-            <input class="btn btn-dark" type="submit" value="입력">
+            <input class="btn btn-success" type="submit" value="입력">
           </div>
         </form>
       </section>
