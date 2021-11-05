@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <title></title>
+  <title>불인정금액 산출기 | 건국대학교 산학협력단</title>
 </head>
 <body>
   <header class="navbar navbar-expand navbar-dark bg-dark mb-3">
@@ -23,39 +23,132 @@
       <span class="navber-text"></span>
     </div>
   </header>
-  <main class="container" style="max-width: 60rem;">
+  <main class="container" style="max-width: 30rem;">
     <script type="text/javascript">
+    // 웹페이지
+    var 직접비집행비율 = 0.056;
+    // 문서상
     var 연구수당지급액 = 10000000;
     var 연구수당지급비율 = 0.2;
-    var 직접비사용비율 = 0.1;
+    var 직접비사용비율 = 직접비집행비율;
     var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - 직접비사용비율 - 0.2);
-    document.write(불인정금액);
     </script>
     <article class="row">
       <section class="col">
-        <table class="table table-sm table-striped align-middle text-center mb-0">
-          <thead class="">
-            <tr>
-              <th></th>
-              <th>비율</th>
-              <th>금액</th>
-            </tr>
-          </thead>
-          <tbody class="">
-            <tr>
-              <th>연구수당 지급액</th>
-              <td>-</td>
-              <td>
-                <script type="text/javascript">
-                document.write(연구수당지급액);
-                </script>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <form class="card mb-3 border-dark" method="get">
+          <div class="card-header bg-dark text-light">
+            비목별
+          </div>
+          <table class="table table-striped align-middle text-center mb-0">
+            <thead class="">
+              <tr>
+                <th></th>
+                <th>금액</th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                <th>예산액</th>
+                <td>
+                  <input class="form-control" id="예산액" type="number" name="예산액">
+                  <script type="text/javascript">
+                  document.getElementById('예산액').value = 예산액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>구매요청액</th>
+                <td>
+                  <input class="form-control" id="구매요청액" type="number" name="구매요청액">
+                  <script type="text/javascript">
+                  document.getElementById('구매요청액').value = 구매요청액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>신청금액</th>
+                <td>
+                  <input class="form-control" id="신청금액" type="number" name="신청금액">
+                  <script type="text/javascript">
+                  document.getElementById('신청금액').value = 신청금액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>승인액</th>
+                <td>
+                  <input class="form-control" id="승인액" type="number" name="승인액">
+                  <script type="text/javascript">
+                  document.getElementById('승인액').value = 승인액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>예산조정액</th>
+                <td>
+                  <input class="form-control" id="예산조정액" type="number" name="예산조정액">
+                  <script type="text/javascript">
+                  document.getElementById('예산조정액').value = 예산조정액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>예산잔액</th>
+                <td>
+                  <input class="form-control" id="예산잔액" type="number" name="예산잔액">
+                  <script type="text/javascript">
+                  document.getElementById('예산잔액').value = 예산잔액;
+                  </script>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>불인정금액</th>
+                <td>
+                  <input class="form-control" id="불인정금액" type="number" name="불인정금액">
+                  <script type="text/javascript">
+                  document.getElementById('불인정금액').value = 불인정금액;
+                  </script>
+                </td>
+              </tr>
+              <tr>
+                <th>인정 금액</th>
+                <td>
+                  <input class="form-control" id="예산액" type="number" name="예산액">
+                  <script type="text/javascript">
+                  document.getElementById('예산액').value = 예산액;
+                  </script>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="card-footer d-grid">
+            <input class="btn btn-dark" type="submit" value="입력">
+          </div>
+        </form>
+        <div class="card mb-3 border-secondary">
+          <div class="card-header bg-secondary text-light">
+            참고항목
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">직접비 집행비율은 5.6%입니다.</li>
+            <li class="list-group-item"></li>
+          </ul>
+        </div>
       </section>
     </article>
   </main>
+  <script type="text/javascript">
+  var url = window.location.origin + window.location.pathname;
+  var parameter = window.location.search;
+  document.getElementById("예산액").value = new URLSearchParams(parameter).get("예산액");
+  document.getElementById("구매요청액").value = new URLSearchParams(parameter).get("구매요청액");
+  document.getElementById("신청금액").value = new URLSearchParams(parameter).get("신청금액");
+  document.getElementById("승인액").value = new URLSearchParams(parameter).get("승인액");
+  document.getElementById("예산조정액").value = new URLSearchParams(parameter).get("예산조정액");
+  document.getElementById("예산잔액").value = new URLSearchParams(parameter).get("예산잔액");
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
