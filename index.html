@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr" ondragstart="return false" oncontextmenu="return false" onselectstart="return false">
+<html lang="ko" dir="ltr" ondragstart="return false" oncontextmenu="return false">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,17 +25,15 @@
   </header>
   <main class="container" style="max-width: 30rem;">
     <script type="text/javascript">
-    // 웹페이지
-    var 직접비집행비율 = 0.056;
-    // 문서상
-    var 연구수당_사용금액 = 10000000;
-    var 연구수당총액 = 10000000;
-    var 직접비사용금액 = 10000000;
-    var 직접비총액 = 10000000;
-    var 연구수당지급액 = 연구수당_사용금액;
-    var 연구수당지급비율 = 연구수당_사용금액 / 연구수당총액;
-    var 직접비사용비율 = 직접비사용금액 / 직접비총액;
-    var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - 직접비사용비율 - 0.2);
+    var url = window.location.origin + window.location.pathname;
+    var parameter = window.location.search;
+    var 연구수당지급비율 = 1; // 고정
+    var 직접비사용금액 = 20000000; // 가정
+    var 직접비사용비율 = 0.47; // 가정
+    var 직접비총액 = 20000000; // 가정
+    if (직접비총액) {
+      var 직접비사용비율 = 직접비사용금액 / 직접비총액;
+    }
     </script>
     <article class="row">
       <section class="col">
@@ -52,7 +50,7 @@
             </thead>
             <tbody class="">
               <tr>
-                <th>예산액</th>
+                <th>예산액()</th>
                 <td>
                   <input class="form-control" id="예산액" type="number" name="예산액">
                   <script type="text/javascript">
@@ -70,7 +68,7 @@
                 </td>
               </tr>
               <tr>
-                <th>신청금액</th>
+                <th>신청금액(연구수당)</th>
                 <td>
                   <input class="form-control" id="신청금액" type="number" name="신청금액">
                   <script type="text/javascript">
@@ -92,7 +90,7 @@
                 <td>
                   <input class="form-control" id="예산조정액" type="number" name="예산조정액">
                   <script type="text/javascript">
-                  document.getElementById('예산조정액').value = 예산조정액;
+                    document.getElementById('예산조정액').value = 예산조정액;
                   </script>
                 </td>
               </tr>
@@ -101,7 +99,7 @@
                 <td>
                   <input class="form-control" id="예산잔액" type="number" name="예산잔액">
                   <script type="text/javascript">
-                  document.getElementById('예산잔액').value = 예산잔액;
+                    document.getElementById('예산잔액').value = 예산잔액;
                   </script>
                 </td>
               </tr>
@@ -112,7 +110,7 @@
                 <td>
                   <input class="form-control" id="불인정금액" type="number" name="불인정금액">
                   <script type="text/javascript">
-                  document.getElementById('불인정금액').value = 불인정금액;
+                    document.getElementById('불인정금액').value = 불인정금액;
                   </script>
                 </td>
               </tr>
@@ -121,7 +119,7 @@
                 <td>
                   <input class="form-control" id="예산액" type="number" name="예산액">
                   <script type="text/javascript">
-                  document.getElementById('예산액').value = 예산액;
+                    document.getElementById('예산액').value = 예산액;
                   </script>
                 </td>
               </tr>
@@ -131,26 +129,66 @@
             <input class="btn btn-dark" type="submit" value="입력">
           </div>
         </form>
-        <div class="card mb-3 border-secondary">
-          <div class="card-header bg-secondary text-light">
-            참고항목
+        <form class="card mb-3 border-dark" method="get">
+          <div class="card-header bg-dark text-light">
+            불인정금액 계산하기
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              직접비 집행비율은
-              <script type="text/javascript">
-              document.write((직접비집행비율 * 100).toFixed(1));
-              </script>%입니다.
-            </li>
-            <li class="list-group-item"></li>
-          </ul>
-        </div>
+          <table class="table table-striped align-middle text-center mb-0">
+            <thead class="">
+              <tr>
+                <th></th>
+                <th>금액</th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                <th>연구수당지급액</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="연구수당지급액" type="number" name="연구수당지급액">
+                    <script type="text/javascript">
+                    var 연구수당지급액 = new URLSearchParams(parameter).get("연구수당지급액");
+                    document.getElementById('연구수당지급액').value = 연구수당지급액;
+                    </script>
+                    <span class="input-group-text">원</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>직접비사용비율</th>
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" id="직접비사용비율" type="number" name="직접비사용비율">
+                    <script type="text/javascript">
+                    var 직접비사용비율 = new URLSearchParams(parameter).get("직접비사용비율");
+                    document.getElementById('직접비사용비율').value = 직접비사용비율;
+                    </script>
+                    <span class="input-group-text">%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>불인정금액</th>
+                <td>
+                  <span id="불인정금액">(temp)</span>원
+                </td>
+                <script type="text/javascript">
+                var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - (직접비사용비율 * 0.01) - 0.2);
+                document.getElementById('불인정금액').innerText = Math.round(불인정금액);
+                </script>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="card-footer d-grid">
+            <input class="btn btn-dark" type="submit" value="입력">
+          </div>
+        </form>
       </section>
     </article>
   </main>
   <script type="text/javascript">
-  var url = window.location.origin + window.location.pathname;
-  var parameter = window.location.search;
   document.getElementById("예산액").value = new URLSearchParams(parameter).get("예산액");
   document.getElementById("구매요청액").value = new URLSearchParams(parameter).get("구매요청액");
   document.getElementById("신청금액").value = new URLSearchParams(parameter).get("신청금액");
