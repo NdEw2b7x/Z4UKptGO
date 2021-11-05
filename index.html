@@ -39,98 +39,6 @@
       <section class="col">
         <form class="card mb-3 border-dark" method="get">
           <div class="card-header bg-dark text-light">
-            비목별
-          </div>
-          <table class="table table-striped align-middle text-center mb-0">
-            <thead class="">
-              <tr>
-                <th></th>
-                <th>금액</th>
-              </tr>
-            </thead>
-            <tbody class="">
-              <tr>
-                <th>예산액()</th>
-                <td>
-                  <input class="form-control" id="예산액" type="number" name="예산액">
-                  <script type="text/javascript">
-                  document.getElementById('예산액').value = 예산액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>구매요청액</th>
-                <td>
-                  <input class="form-control" id="구매요청액" type="number" name="구매요청액">
-                  <script type="text/javascript">
-                  document.getElementById('구매요청액').value = 구매요청액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>신청금액(연구수당)</th>
-                <td>
-                  <input class="form-control" id="신청금액" type="number" name="신청금액">
-                  <script type="text/javascript">
-                  document.getElementById('신청금액').value = 신청금액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>승인액</th>
-                <td>
-                  <input class="form-control" id="승인액" type="number" name="승인액">
-                  <script type="text/javascript">
-                  document.getElementById('승인액').value = 승인액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>예산조정액</th>
-                <td>
-                  <input class="form-control" id="예산조정액" type="number" name="예산조정액">
-                  <script type="text/javascript">
-                    document.getElementById('예산조정액').value = 예산조정액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>예산잔액</th>
-                <td>
-                  <input class="form-control" id="예산잔액" type="number" name="예산잔액">
-                  <script type="text/javascript">
-                    document.getElementById('예산잔액').value = 예산잔액;
-                  </script>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>불인정금액</th>
-                <td>
-                  <input class="form-control" id="불인정금액" type="number" name="불인정금액">
-                  <script type="text/javascript">
-                    document.getElementById('불인정금액').value = 불인정금액;
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>인정 금액</th>
-                <td>
-                  <input class="form-control" id="예산액" type="number" name="예산액">
-                  <script type="text/javascript">
-                    document.getElementById('예산액').value = 예산액;
-                  </script>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-          <div class="card-footer d-grid">
-            <input class="btn btn-dark" type="submit" value="입력">
-          </div>
-        </form>
-        <form class="card mb-3 border-dark" method="get">
-          <div class="card-header bg-dark text-light">
             불인정금액 계산하기
           </div>
           <table class="table table-striped align-middle text-center mb-0">
@@ -170,13 +78,23 @@
             </tbody>
             <tfoot>
               <tr>
+                <th>직접비사용비율</th>
+                <td>
+                  <span id="불인정d금액">(temp)</span>%
+                </td>
+                <script type="text/javascript">
+                var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - (직접비사용비율 * 0.01) - 0.2);
+                document.getElementById('불인정금액').innerText = Math.round(불인정금액).toLocaleString();
+                </script>
+              </tr>
+              <tr>
                 <th>불인정금액</th>
                 <td>
                   <span id="불인정금액">(temp)</span>원
                 </td>
                 <script type="text/javascript">
                 var 불인정금액 = 연구수당지급액 * (연구수당지급비율 - (직접비사용비율 * 0.01) - 0.2);
-                document.getElementById('불인정금액').innerText = Math.round(불인정금액);
+                document.getElementById('불인정금액').innerText = Math.round(불인정금액).toLocaleString();
                 </script>
               </tr>
             </tfoot>
